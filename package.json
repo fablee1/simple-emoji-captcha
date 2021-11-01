@@ -4,6 +4,10 @@
   "description": "",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fablee1/simple-emoji-captcha.git"
+  },
   "files": [
     "/lib"
   ],
