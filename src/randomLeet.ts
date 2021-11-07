@@ -10,15 +10,13 @@ const customLeetDict: { [key: string]: string } = {
 const customLeetLettersString = Object.keys(customLeetDict).join()
 
 export const convertToRandomLeet = (question: string): string => {
-  const newQuestion = Array.from(question)
-    .map((l) => {
-      if (customLeetLettersString.includes(l.toLowerCase())) {
-        if (Math.random() > 0.5) {
-          return customLeetDict[l.toLowerCase()]
-        }
+  const newQuestion = Array.from(question).map((l) => {
+    if (customLeetLettersString.includes(l.toLowerCase())) {
+      if (Math.random() > 0.5) {
+        return customLeetDict[l.toLowerCase()]
       }
-      return l
-    })
-    .join()
-  return newQuestion
+    }
+    return l
+  })
+  return newQuestion.join("")
 }
