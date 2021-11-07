@@ -1,4 +1,6 @@
 import Str from "@supercharge/strings"
+import { convertToRandomLeet } from "./randomLeet"
+import { pickRandomCount } from "./utils"
 
 const answersSample = [
   "🐬",
@@ -48,7 +50,11 @@ export class Captcha {
     this._answers = answers
   }
 
-  public generateCaptcha(): { token: string; question: string; answers: string[] } {
+  public generateCaptcha(leet: boolean = false): {
+    token: string
+    question: string
+    answers: string[]
+  } {
     const newCaptchaToken = Str.random()
 
     const question = this._questions[Math.floor(Math.random() * this._questions.length)]
@@ -63,13 +69,15 @@ export class Captcha {
       timeOut: captchaTimeout,
     }
 
-    const randomAnswers = this._answers
-      .filter((a) => a !== question.a)
-      .sort(() => Math.random() - 0.5)
-      .slice(0, 5)
+    const randomAnswers = pickRandomCount(this._answers, question.a)
     const finalAnswers = [...randomAnswers, question.a].sort(() => Math.random() - 0.5)
 
-    return { token: newCaptchaToken, question: question.q, answers: finalAnswers }
+    let questionText = question.q
+    if (leet) {
+      questionText = convertToRandomLeet(questionText)
+    }
+
+    return { token: newCaptchaToken, question: questionText, answers: finalAnswers }
   }
 
   public checkCaptcha(token: string, answer: string): boolean {
